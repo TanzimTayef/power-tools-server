@@ -20,6 +20,7 @@ async function run() {
         await client.connect();
         const toolsCollection = client.db("power-tools").collection("tools");
         const orderCollection = client.db("power-tools").collection("order");
+        const reviewCollection = client.db("power-tools").collection("review");
 
         app.get("/tools", async (req, res) => {
             const query = {};
@@ -27,6 +28,7 @@ async function run() {
             const tools = await cursor.toArray();
             res.send(tools);
         });
+
 
         app.get("/tools/:id", async (req, res) => {
             const id = req.params.id;
@@ -49,12 +51,26 @@ async function run() {
             res.send(orders);  
           })
         
-          app.delete("/order/:id", async (req, res) => {
+        app.delete("/order/:id", async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await orderCollection.deleteOne(query);
             res.send(result);
-        })
+        });
+
+        app.get("/review", async (req, res) => {
+            const query = {};
+            const cursor = reviewCollection.find(query);
+            const review = await cursor.toArray();
+            res.send(review);
+        });
+
+        
+          app.post("/review", async (req, res) => {
+            const newTools = req.body;
+            const result = await reviewCollection.insertOne(newTools);
+            res.send(result);
+        });
         
       
     
