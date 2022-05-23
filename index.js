@@ -25,7 +25,9 @@ async function run() {
             const cursor = toolsCollection.find(query);
             const tools = await cursor.toArray();
             res.send(tools);
-          });
+        });
+        
+      
     
     } finally {
         
