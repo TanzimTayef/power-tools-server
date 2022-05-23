@@ -39,6 +39,21 @@ async function run() {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             res.send(result);
+          })
+        
+          app.get("/order", async (req, res) => {
+            const email = req.query.email;
+            const query = {email: email};
+            const cursor = orderCollection.find(query);
+            const orders = await cursor.toArray();
+            res.send(orders);  
+          })
+        
+          app.delete("/order/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await orderCollection.deleteOne(query);
+            res.send(result);
         })
         
       
