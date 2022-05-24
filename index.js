@@ -31,6 +31,11 @@ async function run() {
       const tools = await cursor.toArray();
       res.send(tools);
     });
+    app.post("/tools", async (req, res) => {
+      const tools = req.body;
+      const result = await toolsCollection.insertOne(tools);
+      res.send(result);
+    });
 
     app.get("/tools/:id", async (req, res) => {
       const id = req.params.id;
