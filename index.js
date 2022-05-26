@@ -95,8 +95,8 @@ async function run() {
     app.get("/review", async (req, res) => {
       const query = {};
       const cursor = reviewCollection.find(query);
-      const review = await cursor.toArray();
-      res.send(review.reverse());
+      const review = await cursor.toArray().reverse();
+      res.send(review);
     });
 
     app.post("/review", async (req, res) => {
